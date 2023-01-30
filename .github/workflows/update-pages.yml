@@ -13,3 +13,5 @@ jobs:
       - uses: actions/setup-node@v3
       - run: npm i
       - run: npm run publish-pages
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

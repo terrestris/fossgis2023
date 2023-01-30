@@ -8,8 +8,12 @@ const options = {
   dest: '.',
   message: 'Auto-generated updates from main-branch'
 };
-const callback = () => {
-  console.log('Done.');
+const callback = (err) => {
+  if (err) {
+    console.error('Errored: ', err);
+  } else {
+    console.log('Done.')
+  }
 };
 
 publish(srcDirectory, options, callback);
