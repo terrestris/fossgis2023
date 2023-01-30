@@ -5,7 +5,7 @@
   "description": "Materials for the FOSSGIS 2023",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "node tasks/update-gh-pages.js"
+    "publish-pages": "node tasks/update-gh-pages.js"
   },
   "author": "",
   "license": "cc-by-sa-4.0",
