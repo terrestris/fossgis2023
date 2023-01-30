@@ -9,9 +9,15 @@ jobs:
   update-pages:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: npm i
-      - run: npm run publish-pages
+      - name: Checkout sources 🔰
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js 👷🏻
+        uses: actions/setup-node@v3
+
+      - name: Deploy gh-pages 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: public
