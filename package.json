@@ -4,8 +4,11 @@
   "version": "0.0.1",
   "description": "Materials for the FOSSGIS 2023",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "reload --dir public --browser"
   },
   "author": "",
-  "license": "cc-by-sa-4.0"
+  "license": "cc-by-sa-4.0",
+  "devDependencies": {
+    "reload": "^3.2.1"
+  }
 }

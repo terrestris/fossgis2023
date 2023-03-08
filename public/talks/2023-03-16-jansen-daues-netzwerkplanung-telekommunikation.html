@@ -8,16 +8,291 @@
 
 		<link rel="stylesheet" href="../reveal.js/dist/reset.css">
 		<link rel="stylesheet" href="../reveal.js/dist/reveal.css">
-		<link rel="stylesheet" href="../reveal.js/dist/theme/black.css">
+		<link id="theme" rel="stylesheet" href="../reveal.js/dist/theme/black.css">
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="../reveal.js/plugin/highlight/monokai.css">
+        <!-- Fonts -->
+		<link rel="stylesheet" href="../fonts/fonts.css">
+
+		<style>
+
+		</style>
+		<style>
+:root {
+  --not-quite-black: #333;
+  --not-quite-white: #eee;
+  --dark-blue: #203864;
+  --ratio-part-small: 1;
+  --ratio-part-big: 2.8;
+}
+
+
+
+
+
+.attribution {
+	position:absolute;
+    bottom: 0;
+    left: 0;
+	font-size: 10px;
+	color: whitesmoke;
+}
+.attribution a,
+.attribution a:link,
+.attribution a:visited,
+.attribution a:hover,
+.attribution a:active {
+	color: whitesmoke;
+	text-shadow: 0 0 2px #333;
+	text-decoration: underline;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  height: 90vh;
+  gap: 2em;
+}
+
+.flex-cornered {
+	margin: 5px 5px 5px 10px;
+	flex: var(--ratio-part-small);
+}
+
+.flex-main {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	text-align: left;
+	flex: var(--ratio-part-big);
+    font-family: 'Roboto';
+    font-size: 45pt;
+}
+
+.flex-main p {
+    margin-bottom: 1em;
+}
+
+.flex-main ul {
+    margin-bottom: 1em;
+    font-family: 'Roboto Light';
+    list-style-type: '— ';
+}
+
+.flex-main ul li {
+    padding-right: 210px;
+    position: relative;
+    margin-bottom: 0.5em;
+}
+
+.flex-main ul li span.item-addendum {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 200px;
+    text-align: center;
+    padding: 4px;
+}
+
+.flex-main ul li span.item-addendum img {
+    height: 1.2em;
+    margin: 0
+    
+}
+
+.flex-main ul li span.state {
+    font-family: 'Fira Code';
+    font-size: 25pt;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    text-align: center;
+    padding: 4px;
+    border-style: solid;
+    border-width: 3px;
+    border-radius: 15px;
+    border-color: #e7e6e6;
+}
+.flex-main ul li span.state.done {
+    background-color: #e2f0d9;
+    color: #00b050;
+}
+.flex-main ul li span.state.done::before {
+    content: 'Done';
+}
+.flex-main ul li span.state.ongoing {
+    background-color: #ffd966;
+    color: red;
+}
+.flex-main ul li span.state.ongoing::before {
+    content: 'Ongoing';
+}
+.flex-main ul li span.state.open {
+    background-color: #767171;
+    color: #f2f2f2;
+}
+.flex-main ul li span.state.open::before {
+    content: 'Open';
+}
+.flex-main ul li span.state.blocked {
+    background-color: red;
+    color: white;
+}
+.flex-main ul li span.state.blocked::before {
+    content: 'Blocked';
+}
+.flex-main ul li span.state.cancelled {
+    background-color: #d0cece;
+    color: #3b3838;
+}
+.flex-main ul li span.state.cancelled::before {
+    content: 'Cancelled';
+}
+
+
+.flex-main-img {
+	flex: var(--ratio-part-big);
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+}
+
+.reveal .slides .flex-container h1 {
+	font-family: 'Roboto Bk';
+	text-transform: none;
+	display: block;
+	font-size: 60pt;
+	border-bottom: 0.40em solid var(--dark-blue);
+	padding-bottom: 0.20em;
+	text-align: left
+}
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section id="start" data-background-image="./img/compare-fibre-PAOv9-7VBMI-unsplash.jpg">
+					<img id="vf" src="./img/Vodafone_icon.svg" height="700" />
+					<span class="attribution">Photo by <a href="https://unsplash.com/@comparefibre?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Compare Fibre</a> on <a href="https://unsplash.com/photos/PAOv9-7VBMI?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+					</span>
+				</section>
+				<section data-state="brightside" id="a-description">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>A description</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;">
+							<p>
+								The Planning App simplifies the
+								designing of fixed network assets.
+							</p> 
+							<p>
+								Unified planning in the app is integrated into the planning workflow in JIRA. 
+							</p>
+						</div>
+					</div>
+				</section>
+				<section data-state="darkside">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>A description</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;">
+							<p>
+								The Planning App simplifies the
+								designing of fixed network assets.
+							</p> 
+							<p>
+								Unified planning in the app is integrated into the planning workflow in JIRA. 
+							</p>
+							<p>
+								The Planning App simplifies the
+								designing of fixed network assets.
+							</p> 
+						</div>
+					</div>
+				</section>
+				<section data-state="darkside" id="an-image">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>An image</h1>
+						</div>
+						<div class="flex-main-img">
+						  <img src="https://loremflickr.com/800/800"/>
+						</div>
+					</div>
+                    <span class="attribution">Attribution here</span>		
+				</section>
+
+                <section data-state="brightside" id="a-list">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>A List</h1>
+						</div>
+						<div class="flex-main">
+                            <ul>
+                                <li>A finished ToDo<span class="state done"></span></li>
+                                <li>An ongoing ToDo<span class="state ongoing"></span></li>
+                                <li>An open ToDo<span class="state open"></span></li>
+                                <li>A blocked ToDo<span class="state blocked"></span></li>
+                                <li>A cancelled ToDo<span class="state cancelled"></span></li>
+                            </ul>
+						</div>
+					</div>
+                    <span class="attribution">Attribution here</span>		
+				</section>
+                <section data-state="darkside" id="a-list2">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>A List</h1>
+						</div>
+						<div class="flex-main">
+                            <ul>
+                                <li>A finished ToDo<span class="state done"></span></li>
+                                <li>An ongoing ToDo<span class="state ongoing"></span></li>
+                                <li>An open ToDo<span class="state open"></span></li>
+                                <li>A blocked ToDo<span class="state blocked"></span></li>
+                                <li>A cancelled ToDo<span class="state cancelled"></span></li>
+                            </ul>
+						</div>
+					</div>
+                    <span class="attribution">Attribution here</span>		
+				</section>
+
+                <section data-state="brightside" id="tech-decision">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Technology Decision</h1>
+						</div>
+						<div class="flex-main">
+                            <ul>
+                                <li>Frontend Framework<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                                <li>Mapping Library<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                                <li>UI Framework<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                                <li>Backend / API Framework<span class="item-addendum"><img src="./img/fastapi.png" alt="Fats API"></span></li>
+                                <li>Databases<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                                <li>Authentication<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                            </ul>
+						</div>
+					</div>
+                    <span class="attribution">Attribution here</span>		
+				</section>
+
+				<section id="imprint">
+                    <div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Impressum</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;" data-auto-animate>
+							<p>
+								Matthias Daues &amp; Marc Jansen
+							</p> 
+						</div>
+					</div>
+                </section>
 			</div>
 		</div>
 
@@ -31,10 +306,21 @@
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-
+				width: '100%',
+				height: '100%',
+				margin: 0.01,
+				// works but needs love
+				// disableLayout: true,
 				// Learn about plugins: https://revealjs.com/plugins/
 				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
 			});
+
+			Reveal.addEventListener( 'brightside', function() {
+				document.getElementById('theme').setAttribute('href','../reveal.js/dist/theme/white.css'); 
+			}, false );
+			Reveal.addEventListener( 'darkside', function() {
+				document.getElementById('theme').setAttribute('href','../reveal.js/dist/theme/black.css'); 
+			}, false );
 		</script>
 	</body>
 </html>
