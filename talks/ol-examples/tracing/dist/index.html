@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Tracing around a polygon</title>
+    <style>
+      .map {
+        width: 100%;
+        height: 400px;
+      }
+    </style>
+    <script type="module" crossorigin src="./assets/index.83ad9f76.js"></script>
+    <link rel="stylesheet" href="./assets/index.ff0860cc.css">
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <form>
+      <label for="type">Geometry type &nbsp;</label>
+      <select id="type">
+        <option value="Polygon">Polygon</option>
+        <option value="LineString">LineString</option>
+        <option value="None">None</option>
+      </select>
+    </form>
+    <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
+    <script src="https://cdn.jsdelivr.net/npm/elm-pep@1.0.6/dist/elm-pep.js"></script>
+    
+  </body>
+</html>
