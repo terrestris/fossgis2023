@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>OpenLayers Feature Frenzy</title>
+
+		<link rel="stylesheet" href="../reveal.js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal.js/dist/reveal.css">
+		<link id="theme" rel="stylesheet" href="../reveal.js/dist/theme/league.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../reveal.js/plugin/highlight/monokai.css">
+        
+		<style>
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+	text-transform: none;
+}
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section id="start" data-background="./img/ol.svg" data-background-size="contain">
+					
+				</section>
+				<section id="title" data-background="./img/ol.svg" data-background-size="contain" data-background-opacity="0.3">
+					<h1>OpenLayers <br>Feature Frenzy</h1>
+					<p style="margin-top: 3em;">
+						M. Jansen, terrestris &amp; A. Hocevar, w3geo
+					</p>
+					<p style="font-size: 0.7em;">
+						FOSSGIS 2023 | 15. M&auml;rz 2023 | Berlin
+					</p>
+				</section>
+
+				<section id="toc">
+					<h3>… was in den nächsten 20 Mins passiert</h3>
+					<ul>
+						<li>Kurz zu uns und dem Vortrag</li>
+						<li>OpenLayers in 120 Sekunden</li>
+						<li>Feature Frenzy</li>
+						<li>Ausblick, oder: Was ist in <code>ol@x.y.z</code>?</li>
+					</ul>
+				</section>
+
+				<section id="meta">
+					<h1 class="r-fit-text">(kurz) Meta</h1>
+				</section>
+
+				<section>
+					<h3>Marc Jansen / terrestris</h3>
+				</section>
+
+				<section>
+					<h3>Andreas Hocevar / w3geo</h3>
+				</section>
+
+				<section>
+					<h3>Dieser Vortrag</h3>
+					<ul>
+						<li>Kurze einführende Worte: Was ist OpenLayers?</li>
+						<li>Schwerpunkt auf Features: Was kann so cooles?</li>
+						<li>Es wird hier und da Code geben: Wie macht man das?</li>
+						<li>Ausblick und wie man jenen beinflussen kann…</li>
+					</ul>
+				</section>
+
+				<section id="what-is-openlayers-1">
+					<ul>
+						<li>Definition + x</li>
+					</ul>
+				</section>
+
+				<section id="what-is-openlayers-2">
+					<ul>
+						<li>Darstellung von Geodaten</li>
+						<li>Interaktion mit jenen</li>
+						<li>… in JavaScript</li>
+						<li>That's it</li>
+					</ul>
+				</section>
+
+				<section id="the-frenzy-starts">
+					<h1 class="r-fit-text">Feature Frenzy</h1>
+				</section>
+
+				<section>
+					<ul>
+						<li>Ideen MJ / Möglichst als live Beispiel</li>
+						<li>Tracing</li>
+					</ul>
+				</section>
+
+				<section id="tracing-example" data-background-iframe="./ol-examples/tracing/dist/index.html">
+					<h1>TODO vite setup, paths :-(</h1>
+				</section>
+
+				<section id="future">
+					<h1 class="r-fit-text">Ausblick</h1>
+				</section>
+
+				<section id="thanks-questions">
+					<h2>Danke!</h2>
+					<h2>Fragen oder Anmerkungen?</h2>
+				</section>
+
+				<section id="imprint" style="font-size: smaller;">
+					<h3>Impressum</h3>
+					<h5>Autoren &amp; Kontakt</h5>
+					<div style="display: flex;">
+						<address style="flex: 1">
+							<strong>Marc Jansen</strong><br>
+							terrestris GmbH &amp; Co. KG<br>
+							Kölnstr. 99<br>
+							53111 Bonn<br>
+							Deutschland<br>
+							<a href="mailto:jansen@terrestris.de">jansen@terrestris.de</a><br>
+						</address>
+						<address style="flex: 1">
+							<strong>Andreas Hocevar</strong><br>
+							w3geo GmbH<br>
+							Seidengasse 46<br>
+							1070 Wien<br>
+							Österreich<br>
+							<a href="mailto:ahocevar@w3geo.at">ahocevar@w3geo.at</a>
+						</address>
+					</div>		
+					<h5 style="margin-top: 1em;">Lizenz</h5>
+					<p>Diese Folien sind unter <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a> veröffentlicht.
+					</p>
+					</div>
+                </section>
+			</div>
+		</div>
+
+		<script src="../reveal.js/dist/reveal.js"></script>
+		<script src="../reveal.js/plugin/notes/notes.js"></script>
+		<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal.js/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: '100%',
+				height: '100%',
+				margin: 0.01,
+				// works but needs love
+				// disableLayout: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+
+			// Reveal.addEventListener( 'brightside', function() {
+			// 	document.getElementById('theme').setAttribute('href','../reveal.js/dist/theme/white.css'); 
+			// }, false );
+			// Reveal.addEventListener( 'darkside', function() {
+			// 	document.getElementById('theme').setAttribute('href','../reveal.js/dist/theme/black.css'); 
+			// }, false );
+		</script>
+	</body>
+</html>
