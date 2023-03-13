@@ -152,6 +152,51 @@ applyStyle(layer, './ogcapi/collections/countries/styles/default.json');
 
 				<section id="ogc-api-styles-example" data-background-iframe="../examples/ogc-api-styles.html"></section>
 
+				<section id="no-cartography">
+					<h1>Bessere Kartographie geht nicht??? 😕</h1>
+				</section>
+
+				<section id="basemap-de-code">
+					<h2>basemap.de mit ol-mapbox-style 🚀</h2>
+<pre><code class="lang-js">import { apply } from 'ol-mapbox-style';
+
+apply('map', 'https://sgx.geodatenzentrum.de/gdz_basemapde_vektor/styles/bm_web_top.json');
+</code></pre>
+				</section>
+
+				<section id="basemap-de-example" data-background-iframe="../examples/basemap-de.html?z=13&y=52.431097&x=13.531171"></section>
+
+				<section id="basemap-de-not-this-code">
+					<h2>So kann man auch, muss man aber nicht 😱</h2>
+<pre><code style="text-decoration-color: rgba(128, 128, 128, 0.5); text-decoration-line: line-through">var center = [10, 51];
+const mbMap = new mapboxgl.Map({
+	style: 'https://sgx.geodatenzentrum.de/gdz_basemapde_vektor/styles/bm_web_top.json',
+	center: center,
+	container: 'map',
+});
+const mbLayer = new Layer({
+	render(frameState) {
+		const canvas = mbMap.getCanvas();
+		const viewState = frameState.viewState;
+		mbMap.jumpTo({
+			center: toLonLat(viewState.center),
+			zoom: viewState.zoom - 1,
+			animate: false
+		});
+		return canvas;
+  }
+});
+const map = new Map({
+	layers: [mbLayer],
+	target: 'map',
+	view: new View({
+		center: fromLonLat(center),
+		zoom: 6
+	})
+});
+</code></pre>
+				</section>
+
 				<section>
 					<ul>
 						<li>Ideen MJ / Möglichst als live Beispiel</li>
