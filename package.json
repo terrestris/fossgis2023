@@ -4,8 +4,8 @@
   "version": "0.0.1",
   "description": "Materials for the FOSSGIS 2023",
   "scripts": {
-    "start:examples": "vite ./public/talks/ol-examples",
-    "build:examples": "vite build ./public/talks/ol-examples",
+    "start:examples": "vite dev",
+    "build:examples": "vite build",
     "start": "reload --dir public --browser"
   },
   "author": "",

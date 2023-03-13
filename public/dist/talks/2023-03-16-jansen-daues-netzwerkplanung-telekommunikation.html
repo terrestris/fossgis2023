@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Ein Frontend für die Legacy - Netzwerkplanung in der Telekommunikation</title>
+
+		<link rel="stylesheet" href="../reveal.js/dist/reset.css">
+		<link rel="stylesheet" href="../reveal.js/dist/reveal.css">
+		<link id="theme" rel="stylesheet" href="../reveal.js/dist/theme/white.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="../reveal.js/plugin/highlight/monokai.css">
+        <!-- Fonts -->
+		<link rel="stylesheet" href="../fonts/fonts.css">
+		<link rel="stylesheet" href="./vf-like-theme.css">
+		<style>
+
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section id="start" data-state="brightside" >
+					
+					<img src="./img/logos.png"/>
+					<!-- <span class="attribution">Photo by <a href="https://unsplash.com/@comparefibre?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Compare Fibre</a> on <a href="https://unsplash.com/photos/PAOv9-7VBMI?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
+					</span> -->
+				</section>
+				<section data-state="brightside" id="title" data-background-image="./img/logos2.png">
+					<div class="flex-container">
+						<div class="flex-cornered" style="flex: 1.3">
+							<h1 style="text-align: right;">Ein Frontend für die <br>Legacy-Netzwerkplanung<br>in der Telekommunikation</h1>
+						</div>
+						<div class="flex-main" style="text-align: left; flex: 1">
+							<p>
+								FOSSGIS 2023, Berlin, 16.03.
+							</p>
+							<p>
+								Marc Jansen, terrestris &amp;<br>Matthias Daues, Vodafone 
+							</p>
+						</div>
+					</div>
+				</section>
+				<section data-state="brightside" id="author-jansen">
+					<div class="flex-container" style="flex: 1.3">
+						<div class="flex-cornered">
+							<h1>Marc Jansen</h1>
+							<img src="./img/mj.jpeg" alt="Profilbild Marc Jansen" style="border-radius: 500px;"/>
+						</div>
+						<div class="flex-main">
+							<ul>
+								<li>Geschäftsführer <a href="https://terrestris.de/">terrestris</a></li>
+								<li>Kernentwickler OpenLayers</li>
+								<li>Konzeptionell &amp; Coding</li>
+								<li>OSGeo Foundation Charter Member</li>
+								<li>Vorträge zu FOSS4G national &amp; international</li>
+								<li class="subtle code"><a href="mailto:jansen@terrestris.de">jansen@terrestris.de</a><span class="state">E-Mail</span></li>
+								<li class="subtle code"><a href="https://github.com/marcjansen">@marcjansen</a><span class="state">GitHub</span></li>
+			
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section data-state="brightside" id="author-daues">
+					<div class="flex-container">
+						<div class="flex-cornered" style="flex: 1.3">
+							<h1>Matthias Daues</h1>
+							<img src="./img/md.jpg" alt="Profilbild Matthias Daues" style="border-radius: 500px;">
+						</div>
+						<div class="flex-main">
+							<ul>
+								<li>Product Owner Geospatial Services</li>
+								<li><a href="https://vodafone.com">Vodafone</a></li>
+								<li>…loves databases</li>
+								<li>…loves Open Source</li>
+								<li class="subtle code"><a href="mailto:matthias.daues@vodafone.com">matthias.daues@vodafone.com</a><span class="state">E-Mail</span></li>
+								<li class="subtle code"><a href="https://github.com/matthiasdaues">@matthiasdaues</a><span class="state">GitHub</span></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section data-state="brightside">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Abstract</h1>
+						</div>
+						<div class="flex-main" style="font-size: 35pt;">
+							<p>
+								Netzbetrieb und Netzplanung stecken bei Versorgungsunternehmen wie der Vodafone ganz tief im Kern der internen Sytemwelt - Gegenstand existentieller Prozesse und historisch tief verstrickt in Ablauf- und Aufbauorganisation.
+							</p><p> 
+Wir berichten von der Integration der bestehenden GIS- und Dokumentationssystemen durch eine schlanke, cloud-native full stack open source Anwendung für die Planung neuer Netzbestandteile, die alte Zöpfe nicht abschneidet, sondern zu einem e2e-prozess verbindet.
+							</p>
+						</div>
+					</div>
+				</section>
+				<section data-state="brightside" id="toc">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Roadmap surprise</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;">
+							<ul>
+								<li>Ausgangslage</li>
+								<li>Anwendung: Gebietsauswahl</li>
+								<li>Bausteine &amp; Highlights</li>
+								<li>Take-Away: Team, Komponenten &amp; Vorgehen</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section data-state="brightside">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Ausgangslage</h1>
+						</div>
+						<div class="flex-main">
+							<ul>
+								<li>Neue Prozesse für neue Themen, sonst bestimmt Tooling die Herangehensweise</li>
+								<li>Bestandssysteme und deren Abhängigkeiten</li>
+								<li>wichtig &amp; dringend: neues Tool</li>
+								<li><span class="highlight">Leitfrage</span>: Wie bauen wir jenes Tool, so dass es <span class="highlight">mit</span> dem — und nicht gegen den — Bestand arbeitet</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section data-state="brightside" data-background-image="./img/tech-2025.png">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1 style="background: white;">Vodafone Tech 2025</h1>
+						</div>
+						<div class="flex-main-img"> 
+							
+						</div>
+					</div>
+					<span class="attribution"><a href="https://www.youtube.com/watch?v=F5WZn9Mc9l4">https://www.youtube.com/watch?v=F5WZn9Mc9l4</a></span>
+				</section>
+				<section data-state="brightside">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Ausgangslage</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;">
+							<ul>
+								<li>OSS-Partizipation und Standards</li>
+								<li>Inhaltliche Fragestellung ist seitens Vodafone gegeben</li>
+								<li>Schwerpunkt daher in flexibler technologischer Umsetzung</li>
+								<li>Den konkreten Use-Case der Vodafone werden wir daher <span class="highlight">nicht</span> thematisieren</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section data-state="brightside">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Anwendung: Gebietsauswahl</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;">
+							<ul>
+								<li>Fiktives Szenario: Wir planen politischen Haustürvertrieb</li>
+								<li>Ziel: Lauflisten und angepasstest Marketingmaterial für Wahlkämpfer</li>
+								<li>Was haben wir: Adress- und Gebäudebestand, Demographie, statistische Aussagen zu Demographie und Wahlverhalten</li>
+								<li>Wir suchen Wechselwähler</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+				<section data-background-image="./img/app-001.png" data-background-size="contain"></section>
+				<section data-background-image="./img/app-002.png" data-background-size="contain"></section>
+				<section data-background-image="./img/app-003.gif" data-background-size="contain"></section>
+				<section data-background-image="./img/app-004.png" data-background-size="contain"></section>
+				<section data-background-image="./img/app-005.png" data-background-size="contain"></section>
+
+				<section data-state="brightside" id="components">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Bausteine &amp; Highlights</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;">
+							<ul>
+                                <li>Frontend Framework<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                                <li>Mapping Library<span class="item-addendum"><img src="./img/ol.svg" alt="OpenLayers"></span></li>
+                                <li>UI Framework<span class="item-addendum"><img src="./img/fluent-ui.png" alt="Fluent UI"></span></li>
+                                <li>Backend / API Framework<span class="item-addendum"><img src="./img/fastapi.png" alt="Fats API"></span></li>
+                                <li>Database<span class="item-addendum"><img src="./img/postgresql.svg" alt="PostgreSQL"></span></li>
+                                <li>Authentication / IAM<span class="item-addendum"><img src="./img/keycloak.svg" alt="Keycloak"></span></li>
+								<li>ETL<span class="item-addendum"><img src="./img/airflow.png" alt="Apache Airflow"></span></li>
+								<li>GitHub / CI / CD / Cloud<span class="item-addendum"><img src="./img/github-enterprise.png" alt="GitHub Enterprise"></span></li>
+                            </ul>
+						</div>
+					</div>
+				</section>
+				<section data-state="brightside">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Take-Away</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;">
+							<ul>
+								<li class="fragment" style="list-style: none; margin-bottom: 1em;">Team +</li>
+								<li class="fragment" style="list-style: none; margin-bottom: 1em;">Komponenten +</li>
+								<li class="fragment" style="list-style: none; margin-bottom: 1em;">Vorgehen</li>
+								<li class="fragment highlight" style="list-style: none"><strong>➜ Success</strong></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section data-state="brightside">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Ausblick</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;">
+							<ul>
+								<li>In den kommende Monate kommen sicherlich neue Anforderungen, wir sind gerüstet, auch dank OSS</li>
+								<li>Investion in Know-How, Prozesse und Zusammenarbeit</li>
+								<li style="list-style: none">➜ Bauhütten-Prinzip</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<!-- <section data-state="darkside">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>A description</h1>
+						</div>
+						<div class="flex-main" style="margin-top: 3em;">
+							<p>
+								The Planning App simplifies the
+								designing of fixed network assets.
+							</p> 
+							<p>
+								Unified planning in the app is integrated into the planning workflow in JIRA. 
+							</p>
+							<p>
+								The Planning App simplifies the
+								designing of fixed network assets.
+							</p> 
+						</div>
+					</div>
+				</section> -->
+				<!-- <section data-state="darkside" id="an-image">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>An image</h1>
+						</div>
+						<div class="flex-main-img">
+						  <img src="https://loremflickr.com/800/800"/>
+						</div>
+					</div>
+                    <span class="attribution">Attribution here</span>		
+				</section>
+
+                <section data-state="brightside" id="a-list">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>A List</h1>
+						</div>
+						<div class="flex-main">
+                            <ul>
+                                <li>A finished ToDo<span class="state done"></span></li>
+                                <li>An ongoing ToDo<span class="state ongoing"></span></li>
+                                <li>An open ToDo<span class="state open"></span></li>
+                                <li>A blocked ToDo<span class="state blocked"></span></li>
+                                <li>A cancelled ToDo<span class="state cancelled"></span></li>
+                            </ul>
+						</div>
+					</div>
+                    <span class="attribution">Attribution here</span>		
+				</section>
+                <section data-state="darkside" id="a-list2">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>A List</h1>
+						</div>
+						<div class="flex-main">
+                            <ul>
+                                <li>A finished ToDo<span class="state done"></span></li>
+                                <li>An ongoing ToDo<span class="state ongoing"></span></li>
+                                <li>An open ToDo<span class="state open"></span></li>
+                                <li>A blocked ToDo<span class="state blocked"></span></li>
+                                <li>A cancelled ToDo<span class="state cancelled"></span></li>
+                            </ul>
+						</div>
+					</div>
+                    <span class="attribution">Attribution here</span>		
+				</section>
+
+                <section data-state="brightside" id="tech-decision">
+					<div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Technology Decision</h1>
+						</div>
+						<div class="flex-main">
+                            <ul>
+                                <li>Frontend Framework<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                                <li>Mapping Library<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                                <li>UI Framework<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                                <li>Backend / API Framework<span class="item-addendum"><img src="./img/fastapi.png" alt="Fats API"></span></li>
+                                <li>Databases<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                                <li>Authentication<span class="item-addendum"><img src="./img/react.png" alt="ReactJS"></span></li>
+                            </ul>
+						</div>
+					</div>
+                    <span class="attribution">Attribution here</span>		
+				</section> -->
+
+				<section id="imprint">
+                    <div class="flex-container">
+						<div class="flex-cornered">
+							<h1>Impressum</h1>
+						</div>
+						<div class="flex-main" style="font-size: smaller;">
+							
+								<h5>Autoren</h5>
+							
+								Matthias Daues &amp; Marc Jansen<br ><br >
+							
+								<h5>Kontakt</h5>
+								
+								<address style="margin: 0; padding: 0;">
+								Matthias Daues<br>
+								Vodafone GmbH<br>
+								<a href="mailto:matthias.daues@vodafone.com">matthias.daues@vodafone.com</a>
+								</address>
+								<br>
+								<address>
+								Marc Jansen<br>
+								terrestris GmbH &amp; Co. KG<br>
+								<a href="mailto:jansen@terrestris.de">jansen@terrestris.de</a><br>
+								</address>
+							
+							<h5 style="margin-top: 2em;">Lizenz</h5>
+							<p>Diese Folien sind unter <a href="http://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA</a> veröffentlicht.
+							</p>
+						</div>
+					</div>
+                </section>
+			</div>
+		</div>
+
+		<script src="../reveal.js/dist/reveal.js"></script>
+		<script src="../reveal.js/plugin/notes/notes.js"></script>
+		<script src="../reveal.js/plugin/markdown/markdown.js"></script>
+		<script src="../reveal.js/plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+				width: '100%',
+				height: '100%',
+				margin: 0.01,
+				// works but needs love
+				// disableLayout: true,
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+
+			Reveal.addEventListener( 'brightside', function() {
+				document.getElementById('theme').setAttribute('href','../reveal.js/dist/theme/white.css'); 
+			}, false );
+			Reveal.addEventListener( 'darkside', function() {
+				document.getElementById('theme').setAttribute('href','../reveal.js/dist/theme/black.css'); 
+			}, false );
+
+			// // hide logo on start
+			// const hideLogo = () => {
+			// 	document.query
+			// }
+			// Reveal.addEventListener( 'slidechanged', event => {
+			// 	console.log(event.currentSlide)
+			// });
+		</script>
+	</body>
+</html>
