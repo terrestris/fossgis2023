@@ -7,21 +7,27 @@ import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const examplesDir = join(__dirname, 'examples')
+const dirs = [
+  join(__dirname, 'examples'),
+  join(__dirname, 'talks')
+];
 
-const input = readdirSync(examplesDir, {encoding: 'utf8', withFileTypes: true})
+const input = {
+  main: resolve(__dirname, 'index.html')
+}
+
+dirs.forEach(dir => {readdirSync(dir, {encoding: 'utf8', withFileTypes: true})
   .filter(file => file.name.endsWith('.html'))
-  .reduce((previous, current) => {
-    previous[current.name] = resolve(examplesDir, current.name);
-    return previous;
-  }, {});
+  .forEach((file) => {
+    input[file.name] = resolve(dir, file.name);
+  });
+});
 
 export default defineConfig({
   base: '',
   build: {
     rollupOptions: {
       input
-    },
-    outDir: 'public/dist',
+    }
   }
 })
