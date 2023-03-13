@@ -2,7 +2,6 @@ import Map from 'ol/Map.js';
 import View from 'ol/View.js';
 import VectorTileLayer from 'ol/layer/VectorTile';
 import { applyStyle } from 'ol-mapbox-style';
-import { createXYZ } from 'ol/tilegrid';
 import OGCVectorTile from 'ol/source/OGCVectorTile';
 import MVT from 'ol/format/MVT';
 

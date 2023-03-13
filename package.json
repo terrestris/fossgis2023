@@ -11,7 +11,7 @@
   "license": "cc-by-sa-4.0",
   "dependencies": {
     "ol": "^7.3.1-dev.1678109823982",
-    "ol-mapbox-style": "^10.2.0"
+    "ol-mapbox-style": "^10.3.1"
   },
   "devDependencies": {
     "vite": "^3.2.3"
