@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>PMTiles Shaded Relief</title>
+    <style>
+        html,
+        body,
+        .map {
+            font-family: sans-serif;
+            margin: 0 auto;
+            width: 100%;
+            height: 100%;
+        }
+
+        table.controls td {
+            padding: 2px 5px;
+        }
+
+        table.controls td:nth-child(3) {
+            text-align: right;
+            min-width: 3em;
+        }
+
+        #ctrl-container {
+            padding: 2px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 1;
+            background-color: rgba(120, 30, 100, 0.4);
+            backdrop-filter: blur(10px);
+            text-shadow: 1px 1px 4px white;
+            font-size: 1.2em;
+            border-top-right-radius: 1em;;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map" class="map">
+        <div id="ctrl-container">
+            <table class="controls">
+                <tr>
+                    <td>elevation</td>
+                    <td colspan="2" id="elevationOut"></td>
+                </tr>
+                <tr>
+                    <td>location</td>
+                    <td colspan="2" id="locationOut"></td>
+                </tr>
+                <tr>
+                    <td><label for="vert">vertical exaggeration:</label></td>
+                    <td><input id="vert" type="range" min="5" max="50" value="10" /></td>
+                    <td><span id="vertOut"></span> x</td>
+                </tr>
+                <tr>
+                    <td><label for="sunEl">sun elevation:</label></td>
+                    <td><input id="sunEl" type="range" min="0" max="90" value="45" /></td>
+                    <td><span id="sunElOut"></span> °</td>
+                </tr>
+                <tr>
+                    <td><label for="sunAz">sun azimuth:</label></td>
+                    <td><input id="sunAz" type="range" min="0" max="360" value="45" /></td>
+                    <td><span id="sunAzOut"></span> °</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- Pointer events polyfill for old browsers, see https://caniuse.com/#feat=pointer -->
+    <script src="https://cdn.jsdelivr.net/npm/elm-pep@1.0.6/dist/elm-pep.js"></script>
+    <script src="https://unpkg.com/pmtiles@2.4.0/dist/index.js"></script>
+    <script type="module" src="./pmtiles.js"></script>
+</body>
+
+</html>
