@@ -1,0 +1,1 @@
+import{p as e,V as a}from"./featureloader.09c78551.js";import{V as r,O as t,M as o}from"./OGCVectorTile.b88ea054.js";new e({target:"map",layers:[new r({source:new t({url:"https://maps.gnosis.earth/ogcapi/collections/NaturalEarth:cultural:ne_10m_admin_0_countries/tiles/WebMercatorQuad",format:new o})})],view:new a({center:[0,0],zoom:1})});
