@@ -10,7 +10,8 @@
   "author": "",
   "license": "cc-by-sa-4.0",
   "dependencies": {
-    "ol": "^7.3.0"
+    "ol": "^7.3.1-dev.1678109823982",
+    "ol-mapbox-style": "^10.2.0"
   },
   "devDependencies": {
     "vite": "^3.2.3"

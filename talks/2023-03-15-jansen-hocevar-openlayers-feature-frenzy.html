@@ -107,6 +107,44 @@
 					<h1 class="r-fit-text">Feature Frenzy</h1>
 				</section>
 
+				<section id="ogc-standards">
+					<h2>OGC Standards</h2>
+					<ul>
+						<li>WMS, WFS, GML - seit jeher</li>
+						<li>WMTS - seit langer Zeit</li>
+						<li>OGC API Tiles (Map und Vector)</li>
+						<li>OGC API Styles (Mapbox)</li>
+						<li>OGC API Features - teilweise</li>
+					</ul>
+				</section>
+				
+				<section id="ogc-api-tiles-vector-code">
+					<h2>OGC API Tiles (Vector)</h2>
+<pre><code class="lang-js">const layer = new TileLayer({
+	declutter: true,
+	source: new OGCVectorTile({
+	  url: './ogcapi/collections/countries/tiles/WebMercatorQuad',
+	  format: new MVT()
+	})
+});</code></pre>
+				</section>
+
+				<section id="ogc-api-tiles-vector-example" data-background-iframe="../examples/ogc-api-tiles-vector.html"></section>
+
+				<section id="no-style">
+					<h1>Kein Style??? 😕</h1>
+				</section>
+
+				<section id="ogc-api-styles-code">
+					<h2>OGC API Styles (Mapbox)</h2>
+<pre><code class="lang-js">import { applyStyle } from 'ol-mapbox-style';
+
+applyStyle(layer, './ogcapi/collections/countries/styles/default.json');
+</code></pre>
+				</section>
+
+				<section id="ogc-api-styles-example" data-background-iframe="../examples/ogc-api-styles.html"></section>
+
 				<section>
 					<ul>
 						<li>Ideen MJ / Möglichst als live Beispiel</li>
