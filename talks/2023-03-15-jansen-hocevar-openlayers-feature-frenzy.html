@@ -388,6 +388,41 @@ const imageURL = target.querySelector('canvas').toDataURL('image/png');
 					<h1 class="r-fit-text">Ausblick</h1>
 				</section>
 
+				<section>
+					<ul>
+						<li>Mehr WebGL (eigener Vortrag)</li>
+						<li>It's always been you, Canvas 2D - Offscreen Canvas!</li>
+						<li>Web Workers</li>
+						<li>STAC</li>
+						<li>...</li>
+					</ul>
+				</section>
+
+				<section>
+					<ul>
+						<li>Mature Library - keine fixe Roadmap</li>
+						<li>Interessen und Contributions bestimmen die Richtung</li>
+						<li>OpenLayers Sponsoring für Code Sprints etc.</li>
+						<li>Entwickler Sponsoring für Maintenance & Features</li>
+					</ul>
+					<br><br>
+					<div style="text-align: right;"><a target="_blank" href="https://github.com/sponsors/openlayers">github.com/sponsors/openlayers</a></div>
+					<div style="text-align: right;"><a id="sponsor-dev"></a></div>
+					<script>
+						const devs = ['tschaub', 'ahocevar', 'twpayne', 'fredj', 'elemoine', 'crschmidt', 'marcjansen', 'mike-000', 'jahow', 'probins', 'MoonE', 'schuyler', 'bartvde', 'tonio', 'gberaudo', 'petrsloup', 'simonseyock', 'bbinet', 'fgravin', 'GaborFarkas', 'pgiraud', 'pagameba', 'schmidtk', 'bjornharrtell']
+						const sponsorDev = document.getElementById('sponsor-dev');
+						let index = 0;
+						setInterval(() => {
+							const link = `github.com/sponsors/${devs[index]}`;
+							sponsorDev.target = '_blank';
+							sponsorDev.href = 'https://' + link;
+							sponsorDev.innerText = link;
+							index = ++index % devs.length;
+						}, 500);
+					</script>
+			
+				</section>
+				
 				<section id="thanks-questions">
 					<h2>Danke!</h2>
 					<h2>Fragen oder Anmerkungen?</h2>
