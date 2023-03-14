@@ -79,7 +79,7 @@ const field = new VectorLayer({
   })
 });
 
-const geotiff = fromUrl('http://assets.w3geo.at/bev-dtm/ALS_DTM_CRS3035RES50000mN2650000E4600000.tif')
+const geotiff = fromUrl('https://assets.w3geo.at/bev-dtm/ALS_DTM_CRS3035RES50000mN2650000E4600000.tif')
 
 const tileGrid = new TileGrid({
   resolutions: [
