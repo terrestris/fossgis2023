@@ -2,7 +2,7 @@ import { Feature, Map, Overlay, View } from "ol";
 import { Polygon } from "ol/geom";
 import VectorLayer from "ol/layer/Vector";
 import TileLayer from "ol/layer/Tile";
-import { transformExtent, useGeographic } from "ol/proj";
+import { fromLonLat, transformExtent, useGeographic } from "ol/proj";
 import VectorSource from "ol/source/Vector";
 import XYZ from "ol/source/XYZ";
 import proj4 from 'proj4';
@@ -15,7 +15,6 @@ import Stroke from "ol/style/Stroke";
 import LayerSwitcher from 'ol-layerswitcher';
 import { getCenter, getHeight, getWidth } from "ol/extent";
 import Fill from "ol/style/Fill";
-import { getArea } from "ol/sphere";
 
 proj4.defs("EPSG:3035","+proj=laea +lat_0=52 +lon_0=10 +x_0=4321000 +y_0=3210000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs");
 register(proj4);
@@ -143,6 +142,7 @@ const dtm = new TileLayer({
     title: "Hangneigungsklassen"
   },
   opacity: 0.7,
+  visible: false,
   source: new TileImage({
     projection: 'EPSG:3035',
     interpolate: false,
@@ -172,7 +172,7 @@ const map = new Map({
   layers: [osm, dtm, field]
 });
 
-map.getView().fit(field.getSource().getExtent(), {padding: [100, 100, 100, 100]});
+map.getView().fit(field.getSource().getExtent(), {padding: [25, 25, 25, 25]});
 
 const layerSwitcher = new LayerSwitcher({
   reverse: true,
@@ -187,14 +187,14 @@ const schlagStyle = new Style({
 });
 
 async function calculateGradientClasses(schlagFeature) {
-  const extent3035 = transformExtent(schlagFeature.getGeometry().getExtent(), 'EPSG:4326', 'EPSG:3035');
+  let extent3035 = transformExtent(schlagFeature.getGeometry().getExtent(), 'EPSG:4326', 'EPSG:3035');
+  extent3035 = [Math.floor(extent3035[0]), Math.floor(extent3035[1]), Math.ceil(extent3035[2]), Math.ceil(extent3035[3])];
   const width = getWidth(extent3035);
   const height = getHeight(extent3035);
   const target = document.createElement('div');
-  target.style.width = width;
-  target.style.height = height;
   const schlagMap = new Map({
     target,
+    pixelRatio: 1,
     layers: [new VectorLayer({
       source: new VectorSource({
         features: [schlagFeature]
@@ -215,17 +215,18 @@ async function calculateGradientClasses(schlagFeature) {
 
   const {gradientData} = (await getGradientData(extent3035, width, height, 1));
   const schlagData = schlagContext.getImageData(0, 0, width, height).data;
+  const imgUri = schlagCanvas.toDataURL('image/png');
 
   const buckets = {};
   for (let i = 0, ii = schlagData.length; i < ii; i += 4) {
     const schlagAlpha = schlagData[i + 3];
-    if (schlagAlpha === 255) {
+    if (schlagAlpha > 0) {
       const key = gradientData[i / 4];
       buckets[key] = (buckets[key] || 0) + (schlagAlpha / 255);
     }
   }
   const total = Object.values(buckets).reduce((a, b) => a + b, 0);
-  return {buckets, total};
+  return {buckets, total, imgUri};
 }
 
 const container = document.getElementById('popup');
@@ -250,20 +251,32 @@ closer.onclick = function () {
 
 map.on('singleclick', async function (evt) {
   const feature = map.getFeaturesAtPixel(evt.pixel)?.[0];
-  if (!feature) {
-    return;
-  }
+  const coordinate = fromLonLat(evt.coordinate, 'EPSG:3035').map(Math.floor);
+  const elevation = (await (await geotiff).readRasters({
+    bbox: [coordinate[0], coordinate[1], coordinate[0] + 1, coordinate[1] + 1],
+    width: 1,
+    height: 1,
+  }))[0];
   const data = dtm.getData(evt.pixel);
-  if (!data) {
+  if (!data || data[3] === 0) {
     return;
   }
+  overlay.setPosition(evt.coordinate);
   const classIndex = gradientClasses.findIndex(c => data[0] === c.color[0] && data[1] === c.color[1] && data[2] === c.color[2]);
   const gradient = gradientClasses[classIndex].label;
-  const {buckets, total} = await calculateGradientClasses(feature);
+  if (!feature) {
+    content.innerHTML =
+      '<p>Höhe: <b><code>' + elevation[0].toFixed(0) + ' m</code></b></p>' +
+      '<p>Hangneigungsklasse: <b><code>' + gradient + '</code></b></p>';
+    return;
+  }
+
+  const {buckets, total, imgUri} = await calculateGradientClasses(feature);
   content.innerHTML =
+    '<img src="' + imgUri + '" style="width: 120px; float: right">' +
     '<p>Schlag ID: <b><code>' + feature.getId() + '</code></b>' +
-    '<p>Fläche: <b><code>' + Math.round(getArea(feature.getGeometry(), {projection: 'EPSG:4326'})) + ' m<sup>2</sup></code></b>' +
+    '<p>Fläche: <b><code>' + feature.getGeometry().clone().transform('EPSG:4326', 'EPSG:3035').getArea().toFixed(0) + ' m<sup>2</sup></code></b>' +
+    '<p>Höhe: <b><code>' + elevation[0].toFixed(0) + ' m</code></b></p>' +
     '<p>Hangneigungsklasse: <b><code>' + gradient + '</code></b></p>' +
     '<p>Anteil an Schlagfläche: <b><code>' + Math.round(buckets[classIndex] / total * 100) + ' %</code></b></p>';
-  overlay.setPosition(evt.coordinate);
 });
