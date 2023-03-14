@@ -108,12 +108,10 @@ async function getGradientData(extent, imageWidth, imageHeight, resolution) {
   const dtmData = (await (await geotiff).readRasters({
     bbox: extent,
     width: imageWidth,
-    height: imageHeight,
+    height: imageHeight
   }))[0];
-  canvas.width = imageWidth;
-  canvas.height = imageHeight;
-  const geotiffImageData = context.createImageData(imageWidth, imageHeight);
-  const { data, width, height } = geotiffImageData;
+  const gradientImageData = context.createImageData(imageWidth, imageHeight);
+  const { data, width, height } = gradientImageData;
   const gradientData = new Uint8ClampedArray(width * height);
   for (let i = 0; i < width; i++) {
     for (let j = 0; j < height; j++) {
@@ -134,7 +132,7 @@ async function getGradientData(extent, imageWidth, imageHeight, resolution) {
       data.set(color, index);
     }
   }
-  return {geotiffImageData, gradientData};
+  return {gradientImageData, gradientData};
 }
 
 const dtm = new TileLayer({
@@ -153,8 +151,10 @@ const dtm = new TileLayer({
       const extent = tileGrid.getTileCoordExtent(tileCoord);
       const resolution = tileGrid.getResolution(tileCoord[0])
       const tileSize = tileGrid.getTileSize(tileCoord[0]);
-      const {geotiffImageData} = await getGradientData(extent, tileSize, tileSize, resolution);
-      context.putImageData(geotiffImageData, 0, 0);
+      canvas.width = tileSize;
+      canvas.height = tileSize;
+      const {gradientImageData} = await getGradientData(extent, tileSize, tileSize, resolution);
+      context.putImageData(gradientImageData, 0, 0);
       tile.getImage().src = canvas.toDataURL('image/png');
     }
   })
@@ -267,16 +267,16 @@ map.on('singleclick', async function (evt) {
   if (!feature) {
     content.innerHTML =
       '<p>Höhe: <b><code>' + elevation[0].toFixed(0) + ' m</code></b></p>' +
-      '<p>Hangneigungsklasse: <b><code>' + gradient + '</code></b></p>';
+      '<p>Hangneigungsklasse:<br><div style="display: inline-block; vertical-align: middle; border: 1px solid black; width: 16px; height: 16px; background-color: rgba(' + gradientClasses[classIndex].color + ')"></div>&nbsp;<b><code>' + gradient + '</code></b></p>';
     return;
   }
 
   const {buckets, total, imgUri} = await calculateGradientClasses(feature);
   content.innerHTML =
     '<img src="' + imgUri + '" style="width: 120px; float: right">' +
-    '<p>Schlag ID: <b><code>' + feature.getId() + '</code></b>' +
-    '<p>Fläche: <b><code>' + feature.getGeometry().clone().transform('EPSG:4326', 'EPSG:3035').getArea().toFixed(0) + ' m<sup>2</sup></code></b>' +
+    '<p>Schlag ID: <b><code>' + feature.getId() + '</code></b></p>' +
+    '<p>Fläche: <b><code>' + feature.getGeometry().clone().transform('EPSG:4326', 'EPSG:3035').getArea().toFixed(0) + ' m<sup>2</sup></code></b></p>' +
     '<p>Höhe: <b><code>' + elevation[0].toFixed(0) + ' m</code></b></p>' +
-    '<p>Hangneigungsklasse: <b><code>' + gradient + '</code></b></p>' +
+    '<p>Hangneigungsklasse: <div style="display: inline-block; vertical-align: middle; border: 1px solid black; width: 16px; height: 16px; background-color: rgba(' + gradientClasses[classIndex].color + ')"></div>&nbsp;<b><code>' + gradient + '</code></b></p>' +
     '<p>Anteil an Schlagfläche: <b><code>' + Math.round(buckets[classIndex] / total * 100) + ' %</code></b></p>';
 });

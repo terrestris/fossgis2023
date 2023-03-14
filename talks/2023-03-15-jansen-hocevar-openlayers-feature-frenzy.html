@@ -233,6 +233,106 @@ const map = new Map({
 </code></pre>
 				</section>
 
+				<section id="spatial-analysis">
+					<h2>Räumliche Analyse</h2>
+					<ul>
+						<li>Eingebaute Vektor- und Rasteranalysefunktionen</li>
+						<li>Kombinierbar mit Turf.js, geotiff.js, ...</li>
+						<li>Analytische und grafische Ansätze möglich</li>
+						<li>Elemente zur interaktiven Benutzerführung</li>
+						<li>Die Möglichkeiten sind fast grenzenlos!</li>
+					</ul>
+					<div style="text-align: right;"><a target="_blank" href="https://agraratlas.inspire.gv.at">agraratlas.inspire.gv.at</a></div>
+				</section>
+
+				<section id="spatial-analysis-example" data-background-iframe="../examples/gradient.html"></section>
+
+				<section id="show-me-how">
+					<h1>Zeig mir wie! 🤔</h1>
+				</section>
+
+				<section id="dtm">
+					<img src="../img/dtm.png">
+				</section>
+
+				<section id="dtm-code-layer">
+					<h2>Image Tiles mit beliebigen Daten befüllen</h2>
+<pre><code class="lang-js">const canvas = document.createElement('canvas');
+const context = canvas.getContext('2d');
+
+layer.setTileLoadFunction(async (tile, src) => {
+	const tileCoord = tile.getTileCoord();
+	const extent = tileGrid.getTileCoordExtent(tileCoord);
+	const resolution = tileGrid.getResolution(tileCoord[0])
+	const tileSize = tileGrid.getTileSize(tileCoord[0]);
+	canvas.width = tileSize;
+	canvas.height = tileSize;
+	const {gradientImageData} =
+	  await getGradientData(extent, tileSize, tileSize, resolution);
+	context.putImageData(gradientImageData, 0, 0);
+	tile.getImage().src = canvas.toDataURL('image/png');
+};
+</code></pre>
+				</section>
+
+				<section id="dtm-code-geotiff">
+					<h2>Höhenmodell zu Hangneigungsklassen</h2>
+<pre><code class="lang-js">async function getGradientData(bbox, width, height, resolution) {
+	// Höhen aus dem geotiff laden
+  const dtm = (await geotiff.readRasters({ bbox, width, height }))[0];
+  const gradientData = new Uint8ClampedArray(width * height);
+	// befüllen mit den Hangneigungsklassen
+	// https://pro.arcgis.com/en/pro-app/2.9/tool-reference/spatial-analyst/how-slope-works.htm
+  const gradientImageData = context.createImageData(width, height);
+	// befüllen mit Farben für Hangneigungsklassen
+  return {gradientData, gradientImageData};
+}
+</code></pre>
+					<div style="text-align: right;"><a target="_blank" href="https://data.bev.gv.at/geonetwork#/metadata/0365b53c-170b-41ef-962e-44645084f254">data.bev.gv.at</a></div>
+				</section>
+
+				<section id="mask">
+					<img src="../img/mask.png">
+				</section>
+
+				<section id="headless-map-code">
+					<h2>Headless Map</h2>
+<pre><code class="lang-js">const target = document.createElement('div');
+const headlessMap = new Map({
+	target,
+	pixelRatio: 1,
+	layers: [new VectorLayer({ source: selected, style: blackFill })],
+	view: new View({
+		resolution: 1,
+		center: getCenter(geomExtent)
+	})
+});
+headlessMap.setSize([getWidth(geomExtent), getHeight(geomExtent)]);
+headlessMap.renderSync();
+const imageURL = target.querySelector('canvas').toDataURL('image/png');
+</code></pre>
+				</section>
+
+				<section id="calculate">
+					<img src="../img/calculate.png">
+				</section>
+
+				<section id="calculate-code">
+					<h2>Verschneidung Hangneigungsklasse - Schlag</h2>
+					<img src="../img/subpixel.png" style="width: 500px">
+<pre><code class="lang-js">for (let y = 0; y &lt; height; y++) {
+	for (let x = 0; x &lt; width; x++) {
+		const maskPixel = schlagImageData.slice(4 * (y * width + x), 4);
+		const alpha = maskPixel[3] / 255;
+		if (alpha > 0) {
+			const area = resolution * resolution * alpha;
+			classes[gradientData[y * width + x]] += area;
+		}
+	}
+}
+</code></pre>
+				</section>
+
 				<section id="tracing-example">
 					<iframe class="stretch" src="../examples/tracing.html"></iframe>
 					<h3>Tracing</h3>
