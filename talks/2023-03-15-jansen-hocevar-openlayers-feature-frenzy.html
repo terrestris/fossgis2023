@@ -83,6 +83,23 @@ iframe {
 
 				<section>
 					<h3>Andreas Hocevar / w3geo</h3>
+					  <div style="display: flex">
+
+					  <ul style="flex: 3">
+						<li>Gesch&auml;ftsf&uuml;hrer <a href="https://www.w3geo.at/">w3geo</a></li>
+						<li>Derzeit aktivster OpenLayers Entwickler</li>
+						<li>Proj4.js, ol-mapbox-style, geotiff.js …</li>
+						<li>Geospatial Expert</li>
+						<li>JavaScript Entwickler aus Leidenschaft</li>
+					  </ul>
+					  <div style="flex: 1; font-size: 0.5em;">
+					    <img src="/img/ah.jpeg" />
+						<a href="mailto:ahocevar@w3geo.at">ahocevar@w3geo.at</a>  <img style="height: 0.9em;margin:0" src="../assets/mail-logo.png" alt="E-Mail"><br />
+                        <a href="https://github.com/ahocevar/">@ahocevar</a>  <img style="height: 0.9em;margin:0" src="../assets/github-logo.png" alt="GitHub"><br />
+                        <a href="https://twitter.com/ahoce/">@ahoce</a> <img style="height: 0.9em;margin:0" src="../assets/twitter-logo.png" alt="Twitter"><br />
+					  </div>
+					</div>
+				</section>
 				</section>
 
 				<section>
@@ -112,7 +129,7 @@ iframe {
 						<li>beliebige (Geo-)Daten zu Karten machen</li>
 						<li>bei Analysen beliebiger (Geo-)Daten unterstützen</li>
 						<li>gängige Datenformate out-of-the-box</li>
-						<li>exotische Formate mit wenig Code</li>
+						<li>sonstige Formate mit wenig Code</li>
 						<li>und vieles mehr</li>
 					</ul>
 				</section>
@@ -122,7 +139,7 @@ iframe {
 					<ul>
 						<li>Leaflet: umfrangreicher, schwerer zu lernen</li>
 						<li>MapLibre/Mapbox GL JS: flexibler, langsamer</li>
-						<li>ArcGIS Maps SDK for JavaScript: kein Vendor Lock-in</li>
+						<li>ArcGIS Maps SDK: ohne Vendor Lock-in</li>
 					</ul>
 				</section>
 
@@ -176,7 +193,10 @@ applyStyle(layer, './ogcapi/collections/countries/styles/default.json');
 					<h2>basemap.de mit ol-mapbox-style 🚀</h2>
 <pre><code class="lang-js">import { apply } from 'ol-mapbox-style';
 
-apply('map', 'https://sgx.geodatenzentrum.de/gdz_basemapde_vektor/styles/bm_web_top.json');
+apply(
+	'map',
+	'https://sgx.geodatenzentrum.de/gdz_basemapde_vektor/styles/bm_web_top.json'
+);
 </code></pre>
 				</section>
 
@@ -312,7 +332,7 @@ const map = new Map({
 			// - https://revealjs.com/config/
 			Reveal.initialize({
 				hash: true,
-				// width: '100%',
+				width: 1080,
 				// height: '100%',
 				// margin: 0.01,
 				// works but needs love
