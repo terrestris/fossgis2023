@@ -106,7 +106,7 @@ iframe {
 					<h3>Dieser Vortrag</h3>
 					<ul>
 						<li>Kurze einführende Worte: Was ist OpenLayers?</li>
-						<li>Schwerpunkt auf Features: Was kann so cooles?</li>
+						<li>Schwerpunkt auf Features: Was kann <code>ol</code> so cooles?</li>
 						<li>Es wird hier und da Code geben: Wie macht man das?</li>
 						<li>Ausblick und wie man jenen beinflussen kann…</li>
 					</ul>
@@ -338,9 +338,57 @@ const imageURL = target.querySelector('canvas').toDataURL('image/png');
 					<h3>Tracing</h3>
 				</section>
 
+				<section>
+					<h2>Tracing</h2>
+					<pre><code class="lang-js">const drawInteraction = new Draw({
+	type: 'Polygon',
+	source: drawVector.getSource(),
+	trace: true,
+	traceSource: baseVector.getSource(),
+	style: {
+		'stroke-color': 'rgba(255, 255, 100, 0.5)',
+		'stroke-width': 1.5,
+		'fill-color': 'rgba(255, 255, 100, 0.25)',
+		'circle-radius': 6,
+		'circle-fill-color': 'rgba(255, 255, 100, 0.5)',
+	},
+});</code></pre>
+				</section>
+
 				<section id="germany-example">
 					<iframe class="stretch" src="../examples/germany.html"></iframe>
 					<h3>Rasterprozessierung</h3>
+				</section>
+
+				<section>
+					<h2>Rasterstyle</h2>
+					<pre><code class="lang-js">const classes = {
+	'10': 'forest',
+	'20': 'low vegetation',
+	'30': 'water',
+	'40': 'built-up',
+	'50': 'bare soil',
+	'60': 'agriculture'
+}</code></pre>
+				</section>
+
+				<section>
+					<h2>Rasterstyle</h2>
+					<pre><code class="lang-js">// band 1 is 2020, band 2 is 2016
+{
+	color: [
+		'case',
+		['==', ['band', 1], ['band', 2]],
+		[0, 0, 0, 0], // equal, make them transparent
+		['all', ['==', ['band', 1], 10], ['!=', ['band', 2], 10] ],
+		[30, 240, 0, 1], // wald in 2020, irgendwas nicht waldiges in 2016
+		['all', ['==', ['band', 2], 10], ['!=', ['band', 1], 10] ],
+		[240, 10, 0, 1], // wald in 2016, irgendwas nicht waldiges in 2020
+		['all', ['==', ['band', 1], 40], ['!=', ['band', 2], 40] ],
+		[255, 255, 255, 1], // built-up in 2020, irgendwas nicht built-up in 2016
+		[0, 0, 0, 0] // hide any other differences
+	]
+}</code></pre>
 				</section>
 
 				<section>
@@ -353,11 +401,12 @@ const imageURL = target.querySelector('canvas').toDataURL('image/png');
 				</section>
 
 				<section>
-					<h3>PMTiles</h3>
+					<h3><a href="https://github.com/protomaps/PMTiles">PMTiles</a></h3>
 					<ul>
-						<li>https://pub-9288c68512ed46eca46ddcade307709b.r2.dev/protomaps-sample-datasets/terrarium_z9.pmtiles</li>
+						<!-- <li>https://pub-9288c68512ed46eca46ddcade307709b.r2.dev/protomaps-sample-datasets/terrarium_z9.pmtiles</li> -->
 						<li>30.543.645.671 Bytes (28G)</li>
 					</ul>
+					<img class="stretch" src="/img/http.png">
 				</section>
 
 				<section id="pmtiles-example">
