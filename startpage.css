@@ -1,0 +1,69 @@
+:root {
+    --dimension: 280px;
+}
+
+body {
+    line-height: 1.8em;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+    color: darkblue
+}
+
+ul {
+    list-style: none;
+    display: flex;
+    gap: 1em;
+    padding: 0;
+    margin: 0;
+    flex-flow: row wrap;
+
+}
+
+
+
+li {
+    border: 2px solid #cdcdcd;
+    border-radius: 5px;
+    display: block;
+    width: var(--dimension);
+    height: var(--dimension);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 5px;
+    background-color: rgba(200, 200, 200, 0.2);
+
+    box-shadow: 2px 2px 5px #cdcdcd;
+}
+
+li:hover {
+    background-color: rgba(200, 200, 200, 0.6);cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(102, 51, 153, 0.5)
+}
+
+.title,
+.authors,
+.date,
+.time,
+.location {
+    display: block;
+    justify-self: flex-end;
+}
+
+.title {
+    text-align: left;
+    justify-self: flex-start;
+    flex: 1;
+}
+.authors,
+.date,
+.time,
+.location {
+    text-align: right;
+}
