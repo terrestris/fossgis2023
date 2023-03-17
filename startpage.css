@@ -1,10 +1,12 @@
 :root {
-    --dimension: 280px;
+    --dimension: 380px;
 }
 
 body {
     line-height: 1.8em;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background: rgb(255, 204, 0, 0.6);
+    background: linear-gradient(180deg, rgba(255, 180, 15, 0.6) 0%, rgba(0, 37, 101, 0.6) 100%);
 }
 
 a,
@@ -12,7 +14,7 @@ a:link,
 a:visited,
 a:hover,
 a:active {
-    color: darkblue
+    color: #000
 }
 
 ul {
@@ -25,26 +27,28 @@ ul {
 
 }
 
-
-
 li {
-    border: 2px solid #cdcdcd;
-    border-radius: 5px;
+    border: 1px solid rgba(0, 11, 43, 0.7);
+    border-radius: 1.5em 1.5em 1.5em 0;
     display: block;
     width: var(--dimension);
     height: var(--dimension);
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 5px;
-    background-color: rgba(200, 200, 200, 0.2);
-
-    box-shadow: 2px 2px 5px #cdcdcd;
+    padding: 0;
+    background-color: rgba(220, 220, 220, 0.8);
+    box-shadow: 2px 2px 5px rgba(0, 11, 43, 0.5);
+    background-image: url('Berliner_Fernsehturm_Februar_2014.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
 }
 
 li:hover {
-    background-color: rgba(200, 200, 200, 0.6);cursor: pointer;
-    box-shadow: 2px 2px 5px rgba(102, 51, 153, 0.5)
+    background-color: rgba(220, 220, 220, 1);
+    background-blend-mode: multiply;
+    box-shadow: 2px 2px 5px rgba(0, 11, 43, 0.7);
 }
 
 .title,
@@ -60,10 +64,35 @@ li:hover {
     text-align: left;
     justify-self: flex-start;
     flex: 1;
+    backdrop-filter: blur(2px);
+    margin: 0;
+    letter-spacing: 0.15rem;
 }
+
+
+a.title,
+a.title:link,
+a.title:visited,
+a.title:hover,
+a.title:active {
+    color: #eee;
+    text-shadow: 1px 1px 2px black;
+    margin: 1em;
+}
+
+li:hover .title {
+    backdrop-filter: none;
+}
+
 .authors,
 .date,
 .time,
 .location {
     text-align: right;
+    margin: 1px 1em;
+}
+
+li img {
+    height: 1.4em;
+    margin-left: 0.5em;
 }
