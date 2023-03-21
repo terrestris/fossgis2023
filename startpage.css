@@ -2,6 +2,7 @@
     --dimension: 380px;
     --orange: rgba(255, 180, 15, 0.6);
     --blue: rgba(0, 37, 101, 0.6);
+    --animation-duration: 0.3s;
 }
 
 body {
@@ -45,12 +46,13 @@ li {
     background-size: contain;
     background-repeat: no-repeat;
     background-position-x: center;
+    transition: box-shadow var(--animation-duration) ease-out;
 }
 
 li:hover {
     background-color: rgba(220, 220, 220, 1);
     background-blend-mode: multiply;
-    box-shadow: 2px 2px 5px rgba(0, 11, 43, 0.7);
+    box-shadow: 4px 8px 10px rgba(0, 11, 43, 0.8);
 }
 
 .title,
@@ -64,9 +66,10 @@ li:hover {
 
 a.title {
     text-align: left;
+    transition: backdrop-filter var(--animation-duration);
     justify-self: flex-start;
     flex: 1;
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(3px);
     margin: 0;
     letter-spacing: 0.15rem;
 }
